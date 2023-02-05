@@ -3,10 +3,9 @@ package com.elvan.vlog.requests;
 import lombok.Data;
 
 @Data
-public class PostCreateRequest {
+public class LikeCreateRequest {
 
     Long id;
-    String text;
-    String title;
     Long userId;
+    Long postId;
 }

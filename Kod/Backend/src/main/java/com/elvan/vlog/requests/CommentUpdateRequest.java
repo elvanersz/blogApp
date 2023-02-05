@@ -3,10 +3,7 @@ package com.elvan.vlog.requests;
 import lombok.Data;
 
 @Data
-public class PostCreateRequest {
+public class CommentUpdateRequest {
 
-    Long id;
     String text;
-    String title;
-    Long userId;
 }

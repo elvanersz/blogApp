@@ -1,6 +1,5 @@
 package com.elvan.vlog.entities;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 

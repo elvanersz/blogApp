@@ -2,14 +2,13 @@ package com.elvan.vlog.services;
 
 import com.elvan.vlog.entities.Post;
 import com.elvan.vlog.entities.User;
-import com.elvan.vlog.repos.PostRepository;
+import com.elvan.vlog.repositories.PostRepository;
 import com.elvan.vlog.requests.PostCreateRequest;
 import com.elvan.vlog.requests.PostUpdateRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 @AllArgsConstructor

@@ -9,5 +9,4 @@ public class VlogApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VlogApplication.class, args);
 	}
-
 }

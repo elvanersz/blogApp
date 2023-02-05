@@ -6,7 +6,6 @@ import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
 @Data
 @Entity
 @Table(name = "comment")
