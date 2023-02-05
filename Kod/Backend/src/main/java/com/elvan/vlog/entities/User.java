@@ -1,4 +1,4 @@
-package com.elvan.vlog.entity;
+package com.elvan.vlog.entities;
 
 
 import jakarta.persistence.*;
@@ -12,7 +12,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-
     String username;
     String password;
 }
