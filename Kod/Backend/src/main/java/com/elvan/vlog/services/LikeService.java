@@ -5,33 +5,40 @@ import com.elvan.vlog.entities.Post;
 import com.elvan.vlog.entities.User;
 import com.elvan.vlog.repositories.LikeRepository;
 import com.elvan.vlog.requests.LikeCreateRequest;
+import com.elvan.vlog.responses.LikeResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class LikeService {
 
     private LikeRepository likeRepository;
     private UserService userService;
     private PostService postService;
 
+    public LikeService(LikeRepository likeRepository, UserService userService,
+                       PostService postService) {
+        this.likeRepository = likeRepository;
+        this.userService = userService;
+        this.postService = postService;
+    }
 
-    public List<Like> getAllLikes(@RequestParam Optional<Long> userId,
-                                  @RequestParam Optional<Long> postId){
-        if(userId.isPresent() && postId.isPresent()){
-            return likeRepository.findByUserIdAndPostId(userId.get(), postId.get());
-        }else if(userId.isPresent()){
-            return likeRepository.findByUserId(userId.get());
-        }else if(postId.isPresent()){
-            return likeRepository.findByPostId(postId.get());
-        }else{
-            return likeRepository.findAll();
-        }
+    public List<LikeResponse> getAllLikes(Optional<Long> userId, Optional<Long> postId) {
+        List<Like> list;
+        if(userId.isPresent() && postId.isPresent()) {
+            list = likeRepository.findByUserIdAndPostId(userId.get(), postId.get());
+        }else if(userId.isPresent()) {
+            list = likeRepository.findByUserId(userId.get());
+        }else if(postId.isPresent()) {
+            list = likeRepository.findByPostId(postId.get());
+        }else
+            list = likeRepository.findAll();
+        return list.stream().map(like -> new LikeResponse(like)).collect(Collectors.toList());
     }
 
     public Like getOneLike(Long LikeId) {

@@ -3,6 +3,7 @@ package com.elvan.vlog.controllers;
 import com.elvan.vlog.entities.Post;
 import com.elvan.vlog.requests.PostCreateRequest;
 import com.elvan.vlog.requests.PostUpdateRequest;
+import com.elvan.vlog.responses.PostResponse;
 import com.elvan.vlog.services.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/posts")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
 
     private PostService postService;
 
 
     @GetMapping
-    public List<Post> getAllPosts(@RequestParam Optional<Long> userId){
+    public List<PostResponse> getAllPosts(@RequestParam Optional<Long> userId){
         return postService.getAllPosts(userId);
     }
 
