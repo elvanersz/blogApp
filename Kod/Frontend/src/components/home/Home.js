@@ -35,8 +35,9 @@ function Home(){
     }else{
         return(
             <div style={{ backgroundColor: "#cce6ff" }}>
-                <PostForm userId={1} userName={"ddd"} refreshPosts = {refreshPosts}></PostForm>
-                <br />
+                {localStorage.getItem("currentUser") == null ? "":
+                <PostForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("username")} refreshPosts = {refreshPosts}></PostForm>
+                }
                 {postList.map(post => (
                     <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName} text={post.text} title={post.title}></Post>
                 ))}

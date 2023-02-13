@@ -6,10 +6,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { LockOpen } from "@mui/icons-material";
 
 
 function Navbar(){
-    let userId = 5;
+    const onClick = () =>{
+        localStorage.removeItem("tokenKey")
+        localStorage.removeItem("currentUser")
+        localStorage.removeItem("username")
+        window.location.reload(true)
+    }
 
     return(
         <div>
@@ -29,7 +35,12 @@ function Navbar(){
                         <Link to="/" style={{ textDecoration: 'none', color:"inherit"}}>HOME</Link>
                     </Typography>
                     <Typography variant="h6" component="div">
-                        <Link to={{pathname: "/users/" + userId}} style={{ textDecoration: 'none', color:"inherit" }}>USER</Link>
+                        {localStorage.getItem("currentUser") == null ? <Link to="/auth" style={{ textDecoration: 'none', color:"inherit" }}>LOGİN/REGİSTER</Link>: 
+                        <div>
+                            <IconButton onClick={onClick}><LockOpen sx={{ marginBottom:1, marginRight:1, color: "white", title:"LOG OUT" }}></LockOpen></IconButton>
+                            <Link to={{pathname: "/users/" + localStorage.getItem("currentUser")}} style={{ textDecoration: 'none', color:"inherit" }}>PROFİLE</Link>
+                        </div>}
+                        
                     </Typography>
                     </Toolbar>
                 </AppBar>

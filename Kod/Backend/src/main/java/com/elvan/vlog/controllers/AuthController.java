@@ -2,6 +2,7 @@ package com.elvan.vlog.controllers;
 
 import com.elvan.vlog.entities.User;
 import com.elvan.vlog.requests.UserRequest;
+import com.elvan.vlog.responses.AuthResponse;
 import com.elvan.vlog.security.JwtTokenProvider;
 import com.elvan.vlog.services.UserService;
 import lombok.AllArgsConstructor;
@@ -12,12 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import javax.swing.text.html.parser.Entity;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,24 +30,32 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody UserRequest loginRequest){
+    public AuthResponse login(@RequestBody UserRequest loginRequest){
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return "Bearer " + jwtToken;
+
+        User user = userService.getOneUserByUserName(loginRequest.getUsername());
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setMessage("Bearer " + jwtToken);
+        authResponse.setUserId(user.getId());
+        return authResponse;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRequest registerRequest){
+    public ResponseEntity<AuthResponse> register(@RequestBody UserRequest registerRequest){
+        AuthResponse authResponse = new AuthResponse();
         if(userService.getOneUserByUserName(registerRequest.getUsername()) != null){
-            return new ResponseEntity<>("Username already in use.", HttpStatus.BAD_REQUEST);
+            authResponse.setMessage("Username already in use.");
+            return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
         }
 
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userService.createOneUser(user);
-        return new ResponseEntity<>("User successfully registered.",HttpStatus.CREATED);
+        authResponse.setMessage("User successfully registered.");
+        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 }
