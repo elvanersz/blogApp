@@ -45,7 +45,7 @@ function CommentForm(props){
                 <InputAdornment position="start">
                     <Link to={{pathname: "/users/" + userId}} style={{ textDecoration: 'none', color:"inherit" }}>
                         <Avatar style={{ background: "linear-gradient(45deg, #2196F3 25%, #21CBF3 90%" }} aria-label="recipe">
-                            {userName.charAt(0).toUpperCase()}
+                            {localStorage.getItem("username").charAt(0).toUpperCase()}
                         </Avatar>
                     </Link>
                 </InputAdornment>

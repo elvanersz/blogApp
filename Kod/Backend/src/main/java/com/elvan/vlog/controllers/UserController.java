@@ -1,11 +1,13 @@
 package com.elvan.vlog.controllers;
 
 import com.elvan.vlog.entities.User;
+import com.elvan.vlog.responses.UserResponse;
 import com.elvan.vlog.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -23,8 +25,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User getOneUser(@PathVariable Long userId){
-        return userService.getOneUser(userId);
+    public UserResponse getOneUser(@PathVariable Long userId){
+        return new UserResponse(userService.getOneUser(userId));
     }
 
     @PostMapping
@@ -40,5 +42,12 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public void deleteOneUser(@PathVariable Long userId){
         userService.deleteOneUser(userId);
+    }
+
+    /* -------------------------------------------------------------------------------------------- */
+
+    @GetMapping("/activity/{userId}")
+    public List<Object> getUserActivity(@PathVariable Long userId){
+        return userService.getUserActivity(userId);
     }
 }

@@ -37,7 +37,7 @@ function Navbar(){
                     <Typography variant="h6" component="div">
                         {localStorage.getItem("currentUser") == null ? <Link to="/auth" style={{ textDecoration: 'none', color:"inherit" }}>LOGİN/REGİSTER</Link>: 
                         <div>
-                            <IconButton onClick={onClick}><LockOpen sx={{ marginBottom:1, marginRight:1, color: "white", title:"LOG OUT" }}></LockOpen></IconButton>
+                            <IconButton onClick={onClick}><LockOpen sx={{ marginBottom:1, marginRight:1, color: "white" }}></LockOpen></IconButton>
                             <Link to={{pathname: "/users/" + localStorage.getItem("currentUser")}} style={{ textDecoration: 'none', color:"inherit" }}>PROFİLE</Link>
                         </div>}
                         

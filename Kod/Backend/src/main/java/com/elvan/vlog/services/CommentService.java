@@ -9,6 +9,8 @@ import com.elvan.vlog.requests.CommentUpdateRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +50,7 @@ public class CommentService {
             toSave.setPost(post);
             toSave.setUser(user);
             toSave.setText(newCommentRequest.getText());
+            toSave.setCreateDate(new Date());
             return commentRepository.save(toSave);
         }else{
             return null;
