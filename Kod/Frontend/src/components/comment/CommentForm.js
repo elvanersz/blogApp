@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 
 function CommentForm(props){
-    const {userId, userName, postId} = props;
+    const {userId, postId, setCommentRefresh} = props;
     const [text, setText] = useState("");
 
     const saveComment = () => {
@@ -27,6 +27,8 @@ function CommentForm(props){
     const handleSubmit = () => {
         saveComment();
         setText("");
+        setCommentRefresh();
+        window.location.reload(true)
     }
 
     const handleChange = (value) => {

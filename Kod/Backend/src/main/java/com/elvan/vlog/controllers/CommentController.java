@@ -3,6 +3,7 @@ package com.elvan.vlog.controllers;
 import com.elvan.vlog.entities.Comment;
 import com.elvan.vlog.requests.CommentCreateRequest;
 import com.elvan.vlog.requests.CommentUpdateRequest;
+import com.elvan.vlog.responses.CommentResponse;
 import com.elvan.vlog.services.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class CommentController {
 
 
     @GetMapping
-    public List<Comment> getAllComments(@RequestParam Optional<Long> userId,
-                                        @RequestParam Optional<Long> postId){
+    public List<CommentResponse> getAllComments(@RequestParam Optional<Long> userId,
+                                                @RequestParam Optional<Long> postId){
         return commentService.getAllComments(userId, postId);
     }
 

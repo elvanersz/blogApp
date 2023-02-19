@@ -14,7 +14,7 @@ import Avatar from '@mui/material/Avatar';
 import Radio from '@mui/material/Radio';
 
 function Avatara(props){
-    const {avatarId} = props;
+    const {avatarId, userId, userName} = props;
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState(avatarId);
     
@@ -39,6 +39,7 @@ function Avatara(props){
                 "Authorization": localStorage.getItem("tokenKey")
             }, 
             body: JSON.stringify({
+                username: localStorage.getItem("username"),
                 avatarId: selectedValue
             }),
         })
@@ -49,7 +50,7 @@ function Avatara(props){
     
     return(
         <div>
-            <Card style={{ maxWidth:345, margin: "auto", height: 700 }}>
+            <Card style={{ width:345, margin: "auto", height: 700 }}>
                 <CardMedia
                     sx={{ height: 400 }}
                     image={`/avatars/avatar${selectedValue}.png`}
@@ -57,17 +58,16 @@ function Avatara(props){
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        UserName
+                        {userName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        User InfoUser InfoUser InfoUser InfoUser InfoUser InfoUser InfoUser Info
-                        UseUser InfoUser InfoUser InfoUser Info
-                        User InfoUser InfoUser InfoUser InfoUser InfoUser InfoUser InfoUser Info
-                        UseUser InfoUser InfoUser InfoUser Info
+                        User Info
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button onClick={handleOpen} size="small">Change Avatar</Button>
+                <CardActions style={{ marginLeft:"30%", marginTop:"45%" }}>
+                    {localStorage.getItem("currentUser") === userId ? 
+                        <Button onClick={handleOpen} size="small">Change Avatar</Button> : ""
+                    }
                 </CardActions>
             </Card>
 

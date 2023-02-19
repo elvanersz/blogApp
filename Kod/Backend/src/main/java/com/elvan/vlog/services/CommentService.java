@@ -6,6 +6,7 @@ import com.elvan.vlog.entities.User;
 import com.elvan.vlog.repositories.CommentRepository;
 import com.elvan.vlog.requests.CommentCreateRequest;
 import com.elvan.vlog.requests.CommentUpdateRequest;
+import com.elvan.vlog.responses.CommentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,17 +25,19 @@ public class CommentService {
     private PostService postService;
 
 
-    public List<Comment> getAllComments(@RequestParam Optional<Long> userId,
-                                        @RequestParam Optional<Long> postId){
+    public List<CommentResponse> getAllComments(@RequestParam Optional<Long> userId,
+                                                @RequestParam Optional<Long> postId){
+        List<Comment> commentList;
         if(userId.isPresent() && postId.isPresent()){
-            return commentRepository.findByUserIdAndPostId(userId.get(), postId.get());
+            commentList = commentRepository.findByUserIdAndPostId(userId.get(), postId.get());
         }else if(userId.isPresent()){
-            return commentRepository.findByUserId(userId.get());
+            commentList = commentRepository.findByUserId(userId.get());
         }else if(postId.isPresent()){
-            return commentRepository.findByPostId(postId.get());
+            commentList = commentRepository.findByPostId(postId.get());
         }else{
-            return commentRepository.findAll();
+            commentList = commentRepository.findAll();
         }
+        return commentList.stream().map(comment -> new CommentResponse(comment)).collect(Collectors.toList());
     }
 
     public Comment getOneComment(Long commentId) {

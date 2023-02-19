@@ -30,8 +30,8 @@ function User(){
     
     return(
         <div style={{ display:"flex" }}>
-            {user? <Avatara avatarId={user.avatarId} userId={userId} userName={user.userName}/> : "" }
-            <UserActivity userId={userId}/>
+            {user? <Avatara avatarId={user.avatarId} userId={userId} userName={user.username}/> : "" }
+            {localStorage.getItem("currentUser") === userId ? <UserActivity userId={userId}/> : ""}
         </div>
     )
 }
