@@ -1,2 +1,7 @@
 # vlogApp
-HTML, CSS, JS, React, Material UI ile Backend ise Java Spring framework 
+PROJEDE KULLANILAN DİLLER, FRAMEWORKLER VE KÜTÜPHANLER
+- HTML
+- CSS
+- JS (REACT)
+- JAVA (SPRİNG BOOT FRAMEWORK)
+- MATERİAL UI
